@@ -12,6 +12,7 @@ class post_record(models.Model):
     user = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
 class Datadetailprs(models.Model):
     id_prs = models.AutoField(primary_key=True)
     nama = models.TextField(blank=True, null=True)

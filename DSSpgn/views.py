@@ -2,8 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegistrationForm
 # Create your views here.
+from DSSpgn.processing import process
 
 def front(request):
+    # post = dc.objects.using('pgn').latest('id').flow
+    # print(post)
+    sur = process()
+    surv = sur.calculateSVT()
+    print(surv)
     return render(request, 'template/dashboard/front.html')
 
 def dashboard(request):

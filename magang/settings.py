@@ -84,6 +84,14 @@ DATABASES = {
         'PASSWORD' : 'Muhamad_fadilah',
         'HOST': 'localhost',
         'PORT' : '3306'
+    },
+    'pgn': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pgn',
+        'USER': 'pgn',
+        'PASSWORD': 'Muhamad_fadilah',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
