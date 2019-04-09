@@ -1,0 +1,110 @@
+{% extends 'template/base.html' %}
+{% block content %}
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-blue rounded shadow-sm">
+        <img class="mr-3" src="/docs/4.3/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+        <div class="lh-100">
+            <h6 class="mb-0 text-white lh-100">Mother station</h6>
+            <small>SPBG</small>
+        </div>
+    </div>
+
+    <div class="my-3 p-3 bg-white rounded shadow-sm mb-3">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Survival Time PRS</h6>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">PRS</th>
+                            <th scope="col">Survival Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">1</td>
+                            <td scope="row">PT DEVERINDO INDOGRAHA RAYA</td>
+                            <td scope="row">3<span class="text-muted"> jam</span></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">2</td>
+                            <td scope="row">CV ALAM RAYA BOGA</td>
+                            <td scope="row">4<span class="text-muted"> jam</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+    </div>
+
+    <!-- Pembatas -->
+            <div class="my-4 p-3 bg-white rounded shadow-sm mt-3 mb-4">
+                <h6 class="border-bottom border-gray pb-2 mb-0">Status GTM</h6>
+                <hr>
+                <table class="table">
+                    <thead class="thead-inverse bg-blue" style="color:white">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">GTM</th>
+                            <th scope="col">Ukuran</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row">1</td>
+                                <td scope="row">GT-017</td>
+                                <td scope="row">10<span class="text-muted"> ft</span></td>
+                                <td scope="row" class="colorblue">STAND BY</td>
+                                <td scope="row"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelId">Rute</button></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">2</td>
+                                <td scope="row">GT-061</td>
+                                <td scope="row">10<span class="text-muted"> ft</span></td>
+                                <td scope="row" class="colorred">OUT</td>
+                                <td scope="row"></td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Rute Tujuan GTM</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <h6 class="border-bottom border-gray pb-2 mb-0">Data GTM</h6>
+                                <p class="text-muted">Nama   : GT-017</p>
+                                <p class="text-muted">Ukuran : 10ft</p>
+                                <p class="text-muted">Kontak : 0813 3104 4168</p>
+                            </div>
+                            <hr>
+                            <div class="container-fluid">
+                                <h6>Tujuan</h6>
+                                <input class="form-control" type="text" name="country" value="PT DEVERINDO INDOGRAHA RAYA" readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <style>
+        .bg-blue{
+            background-color: rgb(30, 154, 216);
+        }
+        .colorblue{
+            color: #355989;
+        }
+        .colorred{
+            color: #b63737;
+        }
+    </style>
+{% endblock %}
