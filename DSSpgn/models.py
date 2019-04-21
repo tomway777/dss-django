@@ -10,7 +10,13 @@ from django.db import models
 class post_record(models.Model):
     id_post = models.AutoField(primary_key=True)
     user = models.CharField(max_length=255)
+    gtm = models.TextField(max_length=100)
+    prs_tujuan = models.TextField(max_length=100)
+    standby_time = models.IntegerField(max_length=10)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.id_post
 
 
 class Datadetailprs(models.Model):
@@ -28,3 +34,4 @@ class Datadetailprs(models.Model):
     class Meta:
         managed = False
         db_table = 'datadetailprs'
+

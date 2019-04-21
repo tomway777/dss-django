@@ -1,0 +1,28 @@
+{% extends 'template/base.html' %}
+{% block content %}
+    <style>
+        .bg-red{
+            background-color: rgb(216, 84, 77);
+        }
+        .colorblue{
+            color: #355989;
+        }
+        .colorred{
+            color: #b63737;
+        }
+    </style>
+    <nav class="nav nav-tabs nav-stacked">
+      <a class="nav-link" href="{% url 'dashboard' %}">SPBG</a>
+      <a class="nav-link active" href="{% url 'dashboardpwkt' %}">{{namams}}</a>
+      <a class="nav-link" href="#">SPBG</a>
+    </nav>
+    <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-red rounded shadow-sm">
+        <div class="lh-100">
+            <h6 class="mb-0 text-white lh-100">Mother station</h6>
+            <small>
+                {{namams}}
+            </small>
+        </div>
+    </div>
+
+{% endblock %}
