@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from DSSpgn import views as user_views
 from django.contrib.auth import views as auth_views
-
+import re as r
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +26,8 @@ urlpatterns = [
     path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='template/registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='template/registration/logout.html'), name='logout'),
-    path('dashboardpwkt/', user_views.dashboardpwkt, name='dashboardpwkt')
+    path('dashboardpwkt/', user_views.dashboardpwkt, name='dashboardpwkt'),
+    path('dashboardjes/', user_views.dashboardjes, name='dashboardjes'),
+    path('dashboardindogas/', user_views.dashboardindogas, name='dashboardindogas'),
+    path(r'getidgtm/<id>', user_views.getidgtm, name='getidgtm')
 ]
