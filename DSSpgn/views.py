@@ -11,9 +11,26 @@ def getidgtm(request,id):
     name = id
     sur = process()
     data = sur.getIdbyName(name)
-    context = {'id' : name, 'data': data}
-    tes = sur.showcater_prs(1,1,name)
+    allprs = sur.getAllprs_nonsol()
+    # print(allprs)
+    solusi = sur.showcater_prs(1, name)
+    context = {'id' : name, 'data': data, 'allprs' : allprs, 'solusi' : solusi}
+
     return render(request, 'template/dashboard/sarantujuan.html', context)
+
+def getidgtmjes(request,id):
+    name = id
+    sur = process()
+    data = sur.getIdbyName(name)
+    allprs = sur.getAllprs_nonsol()
+    # print(allprs)
+    context = {'id' : name, 'data': data, 'allprs' : allprs}
+    tes = sur.showcater_prs(2,name)
+    return render(request, 'template/dashboard/sarantujuanjes.html', context)
+
+
+
+
 
 def front(request):
     # post = dc.objects.using('pgn').latest('id').flow
@@ -32,10 +49,11 @@ def dashboard(request):
     # jarak = proc.getJarakMs(ms=idms,prs=1)
     # print(jarak)
     prs = proc.getDataPRS()
+    print(prs)
     temp = {}
     listnew = []
     for i in prs:
-        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'],5)
+        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'], i['conkap'])
         temp['survivaltime'] = svt
         tempdict = {**i, **temp}
         listnew.append(tempdict)

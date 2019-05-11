@@ -26,6 +26,7 @@
                             <th scope="col">#</th>
                             <th scope="col">idPRS</th>
                             <th scope="col">Survival Time</th>
+                            <th scope="col">Kapasitas</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,6 +35,7 @@
                                 <td>{{i.idprs}}</td>
                                 <td>{{i.namaprs}}</td>
                                 <td>{{i.survivaltime}}</td>
+                                <td>{{i.kapasitas}} <small>fit</small></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -60,7 +62,7 @@
                                     <td scope="row">{{i.NoGtm}}</td>
                                     <td scope="row">{{i.Kap}}<span class="text-muted"> ft</span></td>
                                     <td scope="row" class="colorblue">{{i.status}}</td>
-                                    <td scope="row"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelId">Rute</button></td>
+                                    <td scope="row"><a href='{% url 'getidgtmjes' id=i.NoGtm%}'><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelId">Rute</button></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>

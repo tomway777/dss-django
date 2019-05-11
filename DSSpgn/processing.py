@@ -14,6 +14,22 @@ class process():
     #TODO: Kalkulasi surv time
         calc =  (pressure * capacity) / flow
         return calc
+    #-------------------------------------------------------------Khusus-------#
+    def getAllprs_nonsol(self):
+        prs = Masterprs.objects.using('pgn').all().values()
+        return prs
+    # -------------------------------------------------------------Khusus-------#
+
+    def convertKap(self, kapasitas):
+        if kapasitas == 40:
+            temkap = 19
+        elif kapasitas == 20:
+            temkap = 9.5
+        elif kapasitas == 10:
+            temkap = 5
+        else:
+            temkap = 2.5
+        return temkap
     #--------------------------------Ambil Nama----------------------------------------------#
     def getNamaMS(self, ms_id=None):
         nama = Mastermotherstation.objects.using('pgn').get(id=ms_id).namams
@@ -25,14 +41,20 @@ class process():
     # ---------------------------------Ambil Data flow & preassure-----------------------------------------#
     def getDataPRS(self):
         listnama = {}
+        listkap = {}
         listbaru = []
         prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','flow','pressureoutlet')
+
         listdict = list(prs)
         for i in listdict:
             for k,v in i.items():
                 if k == 'idprs':
                     listnama['namaprs'] = self.getPrsName(v)
-                    templist = {**i, **listnama}
+                    kapasitas = Masterprs.objects.using('pgn').get(id=v).kapasitas
+                    kap = self.convertKap(kapasitas)
+                    listkap['kapasitas'] = kapasitas
+                    listkap['conkap'] =  kap
+                    templist = {**i, **listnama, **listkap}
                     listbaru.append(templist)
                     # listnama.append(self.getPrsName(v))
         return listbaru
@@ -72,14 +94,18 @@ class process():
 
     # ----------------------------------Perhitungan Saran --------------------------------------------#
 
+
+
     def getAllPrs(self):
         listprs = []
         listkap = {}
+        namapr = {}
         newkap = {}
         prs = Datacater.objects.using('pgn').order_by('waktu').values('idprs','flow','pressureoutlet')
         for i in prs:
             for k,v in i.items():
                 if k == 'idprs':
+                    namaprs = Masterprs.objects.using('pgn').get(id=v).namaprs
                     kap = Masterprs.objects.using('pgn').get(id=v).kapasitas
                     kapasitas = Masterprs.objects.using('pgn').get(id=v).kapasitas
                     temkap = 0
@@ -91,10 +117,12 @@ class process():
                         temkap = 5
                     else:
                         temkap = 2.5
+                    namapr['namaprs'] = namaprs
                     listkap['kap'] = temkap
                     newkap['kapasitas'] = kap
-                newdict = {**i,**newkap,**listkap}
+                newdict = {**i,**namapr,**newkap,**listkap}
             listprs.append(newdict)
+        print(listprs)
         return listprs
 
     def calculateSurv(self):
@@ -107,6 +135,7 @@ class process():
         tempcap = 0
         tempflow = 0
         tempka = {}
+        tempnama = {}
         for i in temp:
             idprs = ""
             for k, v in i.items():
@@ -120,19 +149,20 @@ class process():
                     tempcap = int(v)
                 elif k == 'kapasitas':
                     tempka['kapasitas'] = v
+                elif k == 'namaprs':
+                    tempnama['namaprs'] = v
             svt = (temppres*tempcap)/tempflow
             tempid['id'] = idprs
             tempsvt['survival'] = svt
-            newtems = {**tempid, **tempsvt, **tempka}
+            newtems = {**tempid, **tempnama, **tempsvt, **tempka}
             listnewsvt.append(newtems)
         return listnewsvt
 
 
-    def showcater_prs(self, prs, ms, nama):
+    def showcater_prs(self,  ms, nama):
         #all Prs datacater
 
         testemp = self.calculateSurv()
-        jarak = 0
         tempj = {}
         newlist = []
         for i in testemp:
@@ -144,8 +174,6 @@ class process():
             newlist.append(newdict)
         print(newlist)
 
-
-
         gtmdict = {}
         idgtm = Mastergtm.objects.using('pgn').get(nogtm=nama).id
         kapgtm = Mastergtm.objects.using('pgn').get(id=idgtm).kapasitasgtm
@@ -155,28 +183,30 @@ class process():
 
         solusi = {}
         # print(gtmdict['kap'])
+        # temr = []
+        listsol = []
         for j in newlist:
-            for k,v in j.items():
-                if k == 'kapasitas':
-                    if v == gtmdict['kap']:
-                        print(v)
+            if j.get('kapasitas') == gtmdict['kap']:
+                listsol.append(j)
+        count = len(listsol)
+        if count > 1:
+            temsol = []
+            listc = []
+            for i in listsol:
+                for k,v in i.items():
+                    if k == 'jarak':
+                        temsol.append(v)
+            min_var = min(temsol)
+            for j in listsol:
+                if j.get('jarak') == min_var:
+                    listc.append(j)
+            solusi = listc
+        else:
+            solusi = listsol
+
+        return solusi
 
 
-        #gtm standby di ms
-
-        #kapasitas GTM
-
-        print(idgtm)
-        #jarak antara ms = prs
-        jarak = self.getJarakMs(ms=ms,prs=prs)
-
-
-
-        # querycater = Datacater.objects.using('pgn').filter(idprs=prs.id).values()
-
-        # querycater = Datacater.query.
-        # for i in querycater.values():
-        #     return print(i)
 
         #TODO : Join
         # psobjs = Affiliation.objects.filter(ipId=x)
