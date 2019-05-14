@@ -10,6 +10,11 @@ class process():
     #     calc =  (pressure * capacity) / flow
     #     return calc
 
+
+
+
+
+
     def calculateSVT(self, flow, pressure, capacity):
     #TODO: Kalkulasi surv time
         calc =  (pressure * capacity) / flow
@@ -18,6 +23,9 @@ class process():
     def getAllprs_nonsol(self):
         prs = Masterprs.objects.using('pgn').all().values()
         return prs
+    # -------------------------------------------------------------Khusus-------#
+
+
     # -------------------------------------------------------------Khusus-------#
 
     def convertKap(self, kapasitas):
@@ -122,7 +130,7 @@ class process():
                     newkap['kapasitas'] = kap
                 newdict = {**i,**namapr,**newkap,**listkap}
             listprs.append(newdict)
-        print(listprs)
+        # print(listprs)
         return listprs
 
     def calculateSurv(self):
@@ -172,7 +180,7 @@ class process():
                     tempj['jarak'] = jarak
                 newdict = {**i, **tempj}
             newlist.append(newdict)
-        print(newlist)
+        # print(newlist)
 
         gtmdict = {}
         idgtm = Mastergtm.objects.using('pgn').get(nogtm=nama).id
@@ -184,6 +192,13 @@ class process():
         solusi = {}
         # print(gtmdict['kap'])
         # temr = []
+        
+        filter_first = []
+        for x in newlist:
+            if x.get('jarak') + 1 <= x.get('survival'):
+                filter_first.append(x)
+        print(filter_first)
+
         listsol = []
         for j in newlist:
             if j.get('kapasitas') == gtmdict['kap']:

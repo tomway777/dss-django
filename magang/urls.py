@@ -31,5 +31,7 @@ urlpatterns = [
     path('dashboardindogas/', user_views.dashboardindogas, name='dashboardindogas'),
     #----------------------------------Solusi-------------------------------------
     path(r'getidgtm/<id>', user_views.getidgtm, name='getidgtm'),
-    path(r'getidgtmjes/<id>', user_views.getidgtmjes, name='getidgtmjes')
+    path(r'getidgtmjes/<id>', user_views.getidgtmjes, name='getidgtmjes'),
+    path(r'getidgtmindo/<id>', user_views.getidgtm, name='getidgtmindo'),
+    path(r'getidgtmpur/<id>', user_views.getidgtmjes, name='getidgtmpur')
 ]

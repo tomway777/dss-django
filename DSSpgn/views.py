@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import UserRegistrationForm
 # Create your views here.
 from DSSpgn.processing import process
+from DSSpgn.olah import olah
 
 # def sarangtm(request, idgtm):
 #     return HttpResponse('<h1>This is it {}. </h1>'.format(idgtm))
@@ -25,10 +26,28 @@ def getidgtmjes(request,id):
     allprs = sur.getAllprs_nonsol()
     # print(allprs)
     context = {'id' : name, 'data': data, 'allprs' : allprs}
-    tes = sur.showcater_prs(2,name)
+    tes = sur.showcater_prs(3,name)
     return render(request, 'template/dashboard/sarantujuanjes.html', context)
 
+def getidgtmindo(request,id):
+    name = id
+    sur = process()
+    data = sur.getIdbyName(name)
+    allprs = sur.getAllprs_nonsol()
+    # print(allprs)
+    context = {'id' : name, 'data': data, 'allprs' : allprs}
+    tes = sur.showcater_prs(4,name)
+    return render(request, 'template/dashboard/sarantujuanindogas.html', context)
 
+def getidgtmpur(request,id):
+    name = id
+    sur = process()
+    data = sur.getIdbyName(name)
+    allprs = sur.getAllprs_nonsol()
+    # print(allprs)
+    context = {'id' : name, 'data': data, 'allprs' : allprs}
+    tes = sur.showcater_prs(2,name)
+    return render(request, 'template/dashboard/sarantujuanpur.html', context)
 
 
 
@@ -43,13 +62,19 @@ def front(request):
     return render(request, 'template/dashboard/front.html')
 #--------------------------------------------------------------------#
 proc = process() #objek class processing
+
+
+
 def dashboard(request):
+
+    # ol = olah()
+    # ol.getData(msid=1)
     idms = 1
     namams = proc.getNamaMS(ms_id=idms)
     # jarak = proc.getJarakMs(ms=idms,prs=1)
     # print(jarak)
     prs = proc.getDataPRS()
-    print(prs)
+    # print(prs)
     temp = {}
     listnew = []
     for i in prs:
@@ -57,7 +82,7 @@ def dashboard(request):
         temp['survivaltime'] = svt
         tempdict = {**i, **temp}
         listnew.append(tempdict)
-    print(listnew)
+    # print(listnew)
     #getcurrgtm --- percobaan pake id ms 2
     currgtm = proc.getGTMStanby(ms=idms)
     contex = {'namams' : namams, 'listprs' : listnew, 'currgtm' : currgtm}
@@ -73,7 +98,7 @@ def dashboardpwkt(request):
     temp = {}
     listnew = []
     for i in prs:
-        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'],5)
+        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'],i['conkap'])
         temp['survivaltime'] = svt
         tempdict = {**i, **temp}
         listnew.append(tempdict)
@@ -90,7 +115,7 @@ def dashboardjes(request):
     temp = {}
     listnew = []
     for i in prs:
-        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'],5)
+        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'], i['conkap'])
         temp['survivaltime'] = svt
         tempdict = {**i, **temp}
         listnew.append(tempdict)
@@ -107,7 +132,7 @@ def dashboardindogas(request):
     temp = {}
     listnew = []
     for i in prs:
-        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'],5)
+        svt = proc.calculateSVT(i['flow'],i['pressureoutlet'], i['conkap'])
         temp['survivaltime'] = svt
         tempdict = {**i, **temp}
         listnew.append(tempdict)

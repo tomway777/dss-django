@@ -60,44 +60,12 @@
                                     <td scope="row">{{i.NoGtm}}</td>
                                     <td scope="row">{{i.Kap}}<span class="text-muted"> ft</span></td>
                                     <td scope="row" class="colorblue">{{i.status}}</td>
-                                    <td scope="row"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelId">Rute</button></td>
+                                    <td scope="row"><a href='{% url 'getidgtmindo' id=i.NoGtm%}'><button type="button" class="btn btn-outline-primary">Rute</button></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                 </table>
             </div>
-            {% for i in currgtm %}
-            <!-- Modal -->
-            <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Rute Tujuan GTM</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <h6 class="border-bottom border-gray pb-2 mb-0">Data GTM</h6>
-                                <p class="text-muted">Nama   : {{i.NoGtm}}</p>
-                                <p class="text-muted">Ukuran : {{i.Kap}}</p>
-                                <p class="text-muted">Kontak : 0813 3104 4168</p>
-                            </div>
-                            <hr>
-                            <div class="container-fluid">
-                                <h6>Tujuan</h6>
-                                <input class="form-control" type="text" name="country" value="PT DEVERINDO INDOGRAHA RAYA" readonly>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
     <style>
         .bg-blue{
             background-color: rgb(30, 154, 216);
