@@ -25,7 +25,7 @@ SECRET_KEY = '30__6=#@u5r7r*5k*b0bug$_6kjju^w(o)-e4oh4=j8t@diu_x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dashboardpgn.herokuapp.c']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -141,11 +141,11 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-#Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+# #Extra places for collectstatic to find static files.
+# STATICFILES_DIRS = (
+#     os.path.join(PROJECT_ROOT, 'static'),
+# )
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
