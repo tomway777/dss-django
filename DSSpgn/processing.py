@@ -48,28 +48,26 @@ class process():
         return nama
     # ---------------------------------Ambil Data flow & preassure-----------------------------------------#
     def getDataPRS(self):
-        try:
-            listnama = {}
-            listkap = {}
-            listbaru = []
+        listnama = {}
+        listkap = {}
+        listbaru = []
 
-            prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','flow','pressureoutlet')
-
-            listdict = list(prs)
-            for i in listdict:
-                for k,v in i.items():
-                    if k == 'idprs':
-                        listnama['namaprs'] = self.getPrsName(v)
-                        kapasitas = Masterprs.objects.using('pgn').get(id=v).kapasitas
-                        kap = self.convertKap(kapasitas)
-                        listkap['kapasitas'] = kapasitas
-                        listkap['conkap'] =  kap
-                        templist = {**i, **listnama, **listkap}
-                        listbaru.append(templist)
-                        # listnama.append(self.getPrsName(v))
-            return listbaru
-        except:
-            print('err')
+        prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','flow','pressureoutlet')
+        if prs.get('flow') == 0:
+            prs['flow'] == 1
+        listdict = list(prs)
+        for i in listdict:
+            for k,v in i.items():
+                if k == 'idprs':
+                    listnama['namaprs'] = self.getPrsName(v)
+                    kapasitas = Masterprs.objects.using('pgn').get(id=v).kapasitas
+                    kap = self.convertKap(kapasitas)
+                    listkap['kapasitas'] = kapasitas
+                    listkap['conkap'] =  kap
+                    templist = {**i, **listnama, **listkap}
+                    listbaru.append(templist)
+                    # listnama.append(self.getPrsName(v))
+        return listbaru
 
     # -----------------------------------Ambil Jarak & sesuai MS & PRS------------------------------------#
 
