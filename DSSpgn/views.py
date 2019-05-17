@@ -80,9 +80,11 @@ def dashboard(request):
     for i in prs:
         if i['flow'] == 0:
             svt = proc.calculateSVT(1,i['pressureoutlet'], i['conkap'])
+            temp['survivaltime'] = svt
         else:
             svt = proc.calculateSVT(i['flow'], i['pressureoutlet'], i['conkap'])
-        temp['survivaltime'] = svt
+            temp['survivaltime'] = svt
+
         tempdict = {**i, **temp}
         listnew.append(tempdict)
     # print(listnew)
