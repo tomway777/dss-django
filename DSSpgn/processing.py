@@ -53,8 +53,8 @@ class process():
         listbaru = []
 
         prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','flow','pressureoutlet')
-        if prs.get('flow') == 0:
-            prs['flow'] = 1
+
+
         listdict = list(prs)
         for i in listdict:
             for k,v in i.items():
