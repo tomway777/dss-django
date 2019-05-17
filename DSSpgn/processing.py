@@ -48,24 +48,28 @@ class process():
         return nama
     # ---------------------------------Ambil Data flow & preassure-----------------------------------------#
     def getDataPRS(self):
-        listnama = {}
-        listkap = {}
-        listbaru = []
-        prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','flow','pressureoutlet')
+        try:
+            listnama = {}
+            listkap = {}
+            listbaru = []
 
-        listdict = list(prs)
-        for i in listdict:
-            for k,v in i.items():
-                if k == 'idprs':
-                    listnama['namaprs'] = self.getPrsName(v)
-                    kapasitas = Masterprs.objects.using('pgn').get(id=v).kapasitas
-                    kap = self.convertKap(kapasitas)
-                    listkap['kapasitas'] = kapasitas
-                    listkap['conkap'] =  kap
-                    templist = {**i, **listnama, **listkap}
-                    listbaru.append(templist)
-                    # listnama.append(self.getPrsName(v))
-        return listbaru
+            prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','flow','pressureoutlet')
+
+            listdict = list(prs)
+            for i in listdict:
+                for k,v in i.items():
+                    if k == 'idprs':
+                        listnama['namaprs'] = self.getPrsName(v)
+                        kapasitas = Masterprs.objects.using('pgn').get(id=v).kapasitas
+                        kap = self.convertKap(kapasitas)
+                        listkap['kapasitas'] = kapasitas
+                        listkap['conkap'] =  kap
+                        templist = {**i, **listnama, **listkap}
+                        listbaru.append(templist)
+                        # listnama.append(self.getPrsName(v))
+            return listbaru
+        except:
+            print('err')
 
     # -----------------------------------Ambil Jarak & sesuai MS & PRS------------------------------------#
 
