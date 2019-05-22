@@ -1,17 +1,23 @@
 {% extends 'template/base.html' %}
 
 {% block content %}
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Active link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled link</a>
-        </li>
-    </ul>
+    <style>
+        body{
+             background: #B993D6;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #8CA6DB, #B993D6);
+        }
+    </style>
+    <div class="container" style="padding: 200px">
+
+        <div class="container-fluid text-center ">
+            <h1 class="display-5">PGN</h1>
+            <p class="lead">Dashboard PGN</p>
+            <hr class="my-2">
+        </div>
+
+    </div>
+
     <div>
         {% for i in resp %}
             <h3>{{i.flow}}</h3>
