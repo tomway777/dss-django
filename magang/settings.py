@@ -88,7 +88,7 @@ DATABASES = {
     },
     'pgn': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pgn',
+        'NAME': 'pgnbaru',
         'USER': 'pgn',
         'PASSWORD': 'Muhamad_fadilah',
         'HOST': 'localhost',

@@ -9,16 +9,12 @@ from django.db import models
 
 
 class Datacater(models.Model):
-    id = models.AutoField(db_column='Id',primary_key=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     idprs = models.IntegerField(db_column='IdPRS', blank=True, null=True)  # Field name made lowercase.
     idgtm = models.IntegerField(db_column='IdGTM', blank=True, null=True)  # Field name made lowercase.
     idht = models.IntegerField(db_column='IdHT', blank=True, null=True)  # Field name made lowercase.
     waktu = models.DateTimeField(db_column='Waktu', blank=True, null=True)  # Field name made lowercase.
-    vbase = models.FloatField(db_column='VBase', blank=True, null=True)  # Field name made lowercase.
-    vturbin = models.FloatField(db_column='Vturbin', blank=True, null=True)  # Field name made lowercase.
-    flow = models.FloatField(db_column='Flow', blank=True, null=True)  # Field name made lowercase.
     temp = models.FloatField(db_column='Temp', blank=True, null=True)  # Field name made lowercase.
-    pressureoutlet = models.FloatField(db_column='PressureOutlet', blank=True, null=True)  # Field name made lowercase.
     pressuregtm = models.FloatField(db_column='PressureGTM', blank=True, null=True)  # Field name made lowercase.
     tempgtm = models.FloatField(db_column='TempGTM', blank=True, null=True)  # Field name made lowercase.
     userentry = models.IntegerField(db_column='UserEntry', blank=True, null=True)  # Field name made lowercase.
@@ -32,7 +28,7 @@ class Datacater(models.Model):
 
 
 class Datagtm(models.Model):
-    id = models.AutoField(db_column='Id',primary_key=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     iddatams = models.IntegerField(db_column='IdDataMs', blank=True, null=True)  # Field name made lowercase.
     idgtm = models.IntegerField(db_column='IdGTM', blank=True, null=True)  # Field name made lowercase.
     idht = models.IntegerField(db_column='IdHT', blank=True, null=True)  # Field name made lowercase.
@@ -41,7 +37,7 @@ class Datagtm(models.Model):
     idms = models.IntegerField(db_column='IdMS', blank=True, null=True)  # Field name made lowercase.
     idprs = models.IntegerField(db_column='IdPRS', blank=True, null=True)  # Field name made lowercase.
     jarak = models.FloatField(db_column='Jarak', blank=True, null=True)  # Field name made lowercase.
-    jaraktempuh = models.FloatField(db_column='JarakTempuh', blank=True, null=True)  # Field name made lowercase.
+    waktutempuh = models.FloatField(db_column='WaktuTempuh', blank=True, null=True)  # Field name made lowercase.
     status = models.IntegerField(db_column='Status', blank=True, null=True)  # Field name made lowercase.
     userentry = models.IntegerField(db_column='UserEntry', blank=True, null=True)  # Field name made lowercase.
     createat = models.DateTimeField(db_column='CreateAt')  # Field name made lowercase.
@@ -54,12 +50,14 @@ class Datagtm(models.Model):
 
 
 class Datams(models.Model):
-    id = models.AutoField(db_column='Id',primary_key=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     idms = models.IntegerField(db_column='IdMS', blank=True, null=True)  # Field name made lowercase.
+    iddatagtm = models.IntegerField(db_column='IdDataGTM', blank=True, null=True)  # Field name made lowercase.
     idgtm = models.IntegerField(db_column='IdGTM', blank=True, null=True)  # Field name made lowercase.
     idht = models.IntegerField(db_column='IdHT', blank=True, null=True)  # Field name made lowercase.
     iddriver = models.IntegerField(db_column='IdDriver', blank=True, null=True)  # Field name made lowercase.
     tanggalmasuk = models.DateField(db_column='Tanggalmasuk', blank=True, null=True)  # Field name made lowercase.
+    tanggalkeluar = models.DateTimeField(db_column='Tanggalkeluar', blank=True, null=True)  # Field name made lowercase.
     do = models.CharField(db_column='DO', max_length=255, blank=True, null=True)  # Field name made lowercase.
     ghv = models.FloatField(db_column='GHV', blank=True, null=True)  # Field name made lowercase.
     pressureawal = models.FloatField(db_column='PressureAwal', blank=True, null=True)  # Field name made lowercase.
@@ -77,7 +75,7 @@ class Datams(models.Model):
 
 
 class Datatarget(models.Model):
-    id = models.AutoField(db_column='Id',primary_key=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     jenistarget = models.CharField(db_column='JenisTarget', max_length=12, blank=True, null=True)  # Field name made lowercase.
     nilai = models.FloatField(db_column='Nilai', blank=True, null=True)  # Field name made lowercase.
     tanggaltarget = models.CharField(db_column='TanggalTarget', max_length=10, blank=True, null=True)  # Field name made lowercase.
@@ -91,12 +89,46 @@ class Datatarget(models.Model):
         db_table = 'datatarget'
 
 
+
+class Detaildatacater(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    iddc = models.IntegerField(db_column='IdDC', blank=True, null=True)  # Field name made lowercase.
+    idprs = models.IntegerField(db_column='IdPRS', blank=True, null=True)  # Field name made lowercase.
+    pressureoutlet = models.FloatField(db_column='PressureOutlet', blank=True, null=True)  # Field name made lowercase.
+    vturbin = models.FloatField(db_column='VTurbin', blank=True, null=True)  # Field name made lowercase.
+    vbase = models.FloatField(db_column='VBase', blank=True, null=True)  # Field name made lowercase.
+    flow = models.FloatField(db_column='Flow', blank=True, null=True)  # Field name made lowercase.
+    userentry = models.PositiveIntegerField(db_column='UserEntry', blank=True, null=True)  # Field name made lowercase.
+    createat = models.DateTimeField(db_column='CreateAt')  # Field name made lowercase.
+    updateat = models.DateTimeField(db_column='UpdateAt', blank=True, null=True)  # Field name made lowercase.
+    actived = models.IntegerField(db_column='Actived', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'detaildatacater'
+
+
+class Detaildatagtm(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    iddatagtm = models.IntegerField(db_column='IdDataGtm')  # Field name made lowercase.
+    keterangan = models.TextField(db_column='Keterangan', blank=True, null=True)  # Field name made lowercase.
+    waktutempuh = models.FloatField(db_column='WaktuTempuh')  # Field name made lowercase.
+    jaraktempuh = models.FloatField(db_column='JarakTempuh')  # Field name made lowercase.
+    createat = models.DateTimeField(db_column='CreateAt')  # Field name made lowercase.
+    userentry = models.IntegerField(db_column='UserEntry')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'detaildatagtm'
+
+
 class Detaildatams(models.Model):
-    id = models.AutoField(db_column='Id',primary_key=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     iddatams = models.IntegerField(db_column='IdDataMs', blank=True, null=True)  # Field name made lowercase.
+    iddatagtm = models.IntegerField(db_column='IdDataGTM', blank=True, null=True)  # Field name made lowercase.
     idprs = models.IntegerField(db_column='IdPRS', blank=True, null=True)  # Field name made lowercase.
     jarak = models.FloatField(db_column='Jarak', blank=True, null=True)  # Field name made lowercase.
-    jaraktempuh = models.FloatField(db_column='JarakTempuh', blank=True, null=True)  # Field name made lowercase.
+    waktutempuh = models.FloatField(db_column='WaktuTempuh', blank=True, null=True)  # Field name made lowercase.
     status = models.IntegerField(db_column='Status', blank=True, null=True)  # Field name made lowercase.
     userentry = models.IntegerField(db_column='UserEntry', blank=True, null=True)  # Field name made lowercase.
     createat = models.DateTimeField(db_column='CreateAt')  # Field name made lowercase.
@@ -252,6 +284,7 @@ class Masterpelanggan(models.Model):
 
 class Masterprs(models.Model):
     id = models.AutoField(db_column='Id',primary_key=True)  # Field name made lowercase.
+    parent = models.CharField(max_length=45, blank=True, null=True)
     namaprs = models.CharField(db_column='NamaPRS', max_length=255, blank=True, null=True)  # Field name made lowercase.
     kapasitas = models.IntegerField(db_column='Kapasitas', blank=True, null=True)  # Field name made lowercase.
     userentry = models.IntegerField(db_column='UserEntry', blank=True, null=True)  # Field name made lowercase.
@@ -262,7 +295,6 @@ class Masterprs(models.Model):
     class Meta:
         managed = False
         db_table = 'masterprs'
-
 
 class Masterstatus(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.

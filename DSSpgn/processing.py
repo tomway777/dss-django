@@ -1,31 +1,14 @@
 from DSSpgn.models_pgn import Datacater,Masterprs, Mastergtm, Mastermotherstation, Datagtm, Masterstatus, Detaildatams
 from DSSpgn.models import Datadetailprs, post_record
-
+from decimal import Decimal
 class process():
-    # def calculateSVT(self):
-    # #TODO: cek kalkulasi sruvival time
-    #     flow = Datacater.objects.using('pgn').latest('id').flow
-    #     pressure = Datacater.objects.using('pgn').latest('id').pressureoutlet
-    #     capacity = 5
-    #     calc =  (pressure * capacity) / flow
-    #     return calc
-
-
-
-
-
-
     def calculateSVT(self, flow, pressure, capacity):
-    #TODO: Kalkulasi surv time
-        calc =  (pressure * capacity) / flow
-        return calc
+        calc =  Decimal((pressure * capacity) / (flow/24)*60)
+        return round(calc,2)
     #-------------------------------------------------------------Khusus-------#
     def getAllprs_nonsol(self):
         prs = Masterprs.objects.using('pgn').all().values()
         return prs
-    # -------------------------------------------------------------Khusus-------#
-
-
     # -------------------------------------------------------------Khusus-------#
 
     def convertKap(self, kapasitas):
@@ -52,7 +35,9 @@ class process():
         listkap = {}
         listbaru = []
 
-        prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','flow','pressureoutlet')
+        prs = Datacater.objects.using('pgn').all().order_by('waktu').values('idprs','idgtm','flow','pressureoutlet')
+        #print(prs)
+
 
 
         listdict = list(prs)
@@ -60,13 +45,15 @@ class process():
             for k,v in i.items():
                 if k == 'idprs':
                     listnama['namaprs'] = self.getPrsName(v)
-                    kapasitas = Masterprs.objects.using('pgn').get(id=v).kapasitas
+                if k == 'idgtm':
+                    kapasitas = Mastergtm.objects.using('pgn').get(id=v).kapasitasgtm
                     kap = self.convertKap(kapasitas)
                     listkap['kapasitas'] = kapasitas
                     listkap['conkap'] =  kap
                     templist = {**i, **listnama, **listkap}
                     listbaru.append(templist)
                     # listnama.append(self.getPrsName(v))
+
         return listbaru
 
     # -----------------------------------Ambil Jarak & sesuai MS & PRS------------------------------------#

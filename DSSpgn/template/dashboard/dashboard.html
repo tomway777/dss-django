@@ -1,11 +1,5 @@
 {% extends 'template/base.html' %}
 {% block content %}
-    <nav class="nav nav-tabs nav-stacked">
-      <a class="nav-link active" href="{% url 'dashboard' %}">{{namams}}</a>
-      <a class="nav-link" href="{% url 'dashboardjes' %}">SPBG</a>
-        <a class="nav-link" href="{% url 'dashboardindogas' %}">SPBG</a>
-        <a class="nav-link" href="{% url 'dashboardpwkt' %}">SPBG</a>
-    </nav>
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-blue rounded shadow-sm">
         <div class="lh-100">
             <h6 class="mb-0 text-white lh-100">Mother station</h6>
@@ -23,18 +17,16 @@
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">idPRS</th>
                             <th scope="col">Survival Time</th>
                             <th scope="col">Kapasitas</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for i in listprs %}
+                        {% for i in surv %}
                             <tr>
-                                <td>{{i.idprs}}</td>
                                 <td>{{i.namaprs}}</td>
-                                <td>{{i.survivaltime}}</td>
+                                <td>{{i.survival}}</td>
                                 <td>{{i.kapasitas}} <small>fit</small></td>
                             </tr>
                         {% endfor %}
@@ -45,6 +37,15 @@
     <!-- Pembatas -->
             <div class="my-4 p-3 bg-white rounded shadow-sm mt-3 mb-4">
                 <h6 class="border-bottom border-gray pb-2 mb-0">Status GTM</h6>
+
+                <div class="container" style="margin-top: 10px">
+                    <select class="form-control">
+                        <option value="volvo">MS JES</option>
+                        <option value="saab">MS Ngagel</option>
+                        <option value="opel">MS Purwakarta</option>
+                        <option value="audi">MS Indogas</option>
+                    </select>
+                </div>
                 <hr>
                 <table class="table">
                     <thead class="thead-inverse bg-blue" style="color:white">
