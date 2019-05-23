@@ -1,68 +1,39 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>Saran {{id}}</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-    <nav class="navbar navbar-expand-sm navbar-dark justify-content-center" style="background-color: #0087CC;">
-        <a class="navbar-brand" href="#">Saran {{id}}</a>
-    </nav>
-
+{% extends 'template/base.html' %}
+{% block content %}
     <div class="container shadow mx-auto" style="padding: 30px; margin: 10px">
         <div>
-            <h2 class="text-center">SARAN SISTEM</h2>
+            <h2 class="text-center"><a class="navbar-brand" href="#">Saran {{id}}</a></h2>
+            
             <div class="form-group">
-                {% for i in data %}
-                    <small>No Gtm</small>
-                    <input type="text" class="form-control" value="{{i.nogtm}}" contenteditable="false"style="margin-bottom: 10px">
-                    <small>Kapasitas</small>
-                    <input type="text" class="form-control" value="{{i.kapasitasgtm}}" contenteditable="false"style="margin-bottom: 10px">
-                {% endfor %}
                 <small>Saran</small>
-                {% for i in solusi %}
-                    <input type="text" class="form-control" value="{{i.namaprs}}" contenteditable="false"style="margin-bottom: 10px">
-                {% endfor %}
+{#                {% for i in saran %}#}
+                    <input type="text" class="form-control" value="{{saran}}" contenteditable="false"style="margin-bottom: 10px">
+{#                {% endfor %}#}
 
             </div>
         </div>
     </div>
 
-    <div class="container shadow mx-auto" style="padding: 30px; margin-top: 30px">
-        <div class="form-group">
-            <h2 class="text-center">PEMILIHAN PRS TUJUAN MANUAL</h2>
-             {% for i in data %}
-                    <small>Id</small>
-                    <input type="text" class="form-control" value="{{i.id}}" contenteditable="false" style="margin-bottom: 10px">
-                    <small>No Gtm</small>
-                    <input type="text" class="form-control" value="{{i.nogtm}}" contenteditable="false"style="margin-bottom: 10px">
-                    <small>Kapasitas</small>
-                    <input type="text" class="form-control" value="{{i.kapasitasgtm}}" contenteditable="false"style="margin-bottom: 10px">
-             {% endfor %}
-            <small>Tujuan</small>
-            <select class="form-control" name="" id="">
-            {% for i in allprs %}
-                 <option>{{i.namaprs}}</option>
-            {% endfor %}
-            </select>
+    <div class="my-3 p-3 bg-white rounded shadow-sm mb-3" style="margin-left: 150px; margin-right: 150px">
+            <h6 class="border-bottom border-gray pb-2 mb-0">PRS Detail</h6>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+
+                                <th scope="col">Nama prs</th>
+                                <th scope="col">Survival Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in alt %}
+                                <tr>
+
+                                    <td>{{i.namaprs}}</td>
+                                    <td>{{i.convsur}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
         </div>
-    </div>
-    <!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}

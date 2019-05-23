@@ -22,16 +22,18 @@ import re as r
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', user_views.front, name='front'),
-    path('dashboard/', user_views.dashboard, name='dashboard'),
+    path('ngagel/', user_views.dashboard, name='ngagel'),
     path('register/', user_views.register, name='register'),
     path('login/', auth_views.LoginView.as_view(template_name='template/registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='template/registration/logout.html'), name='logout'),
-    # path('dashboardpwkt/', user_views.dashboardpwkt, name='dashboardpwkt'),
-    # path('dashboardjes/', user_views.dashboardjes, name='dashboardjes'),
-    # path('dashboardindogas/', user_views.dashboardindogas, name='dashboardindogas'),
+    path('purwakarta/', user_views.dashboardpwkt, name='purwakarta'),
+    path('jes/', user_views.dashboardjes, name='jes'),
+    path('indogas/', user_views.dashboardindogas, name='indogas'),
     #----------------------------------Solusi-------------------------------------
-    # path(r'getidgtm/<id>', user_views.getidgtm, name='getidgtm'),
-    # path(r'getidgtmjes/<id>', user_views.getidgtmjes, name='getidgtmjes'),
-    # path(r'getidgtmindo/<id>', user_views.getidgtm, name='getidgtmindo'),
-    # path(r'getidgtmpur/<id>', user_views.getidgtmjes, name='getidgtmpur')
+    path(r'getidgtm/<id>', user_views.getidgtm, name='getidgtm'),
+    path(r'getidgtmjes/<id>', user_views.getidgtmjes, name='getidgtmjes'),
+    path(r'getidgtmindo/<id>', user_views.getidgtm, name='getidgtmindo'),
+    path(r'getidgtmpur/<id>', user_views.getidgtmjes, name='getidgtmpur'),
+    path(r'GTM/', user_views.GTM, name='GTM'),
+    path(r'PRS/', user_views.PRS, name='PRS')
 ]

@@ -5,146 +5,93 @@ from .forms import UserRegistrationForm
 from DSSpgn.processing import process
 from DSSpgn.processingnew import processingnew
 
-# def convertime(time):
-#     mon, sec = divmod(time, 60)
-#     hr, mon = divmod(mon, 60)
-#     result = "%d:%02d:%02d" % (hr, mon, sec)
-#     return result
-#
-#
-# def getidgtm(request,id):
-#     name = id
-#     sur = process()
-#     data = sur.getIdbyName(name)
-#     allprs = sur.getAllprs_nonsol()
-#     # print(allprs)
-#     solusi = sur.showcater_prs(1, name)
-#     context = {'id' : name, 'data': data, 'allprs' : allprs, 'solusi' : solusi}
-#
-#     return render(request, 'template/dashboard/sarantujuan.html', context)
-#
-# def getidgtmjes(request,id):
-#     name = id
-#     sur = process()
-#     data = sur.getIdbyName(name)
-#     allprs = sur.getAllprs_nonsol()
-#     # print(allprs)
-#     context = {'id' : name, 'data': data, 'allprs' : allprs}
-#     tes = sur.showcater_prs(3,name)
-#     return render(request, 'template/dashboard/sarantujuanjes.html', context)
-#
-# def getidgtmindo(request,id):
-#     name = id
-#     sur = process()
-#     data = sur.getIdbyName(name)
-#     allprs = sur.getAllprs_nonsol()
-#     # print(allprs)
-#     context = {'id' : name, 'data': data, 'allprs' : allprs}
-#     tes = sur.showcater_prs(4,name)
-#     return render(request, 'template/dashboard/sarantujuanindogas.html', context)
-#
-# def getidgtmpur(request,id):
-#     name = id
-#     sur = process()
-#     data = sur.getIdbyName(name)
-#     allprs = sur.getAllprs_nonsol()
-#     # print(allprs)
-#     context = {'id' : name, 'data': data, 'allprs' : allprs}
-#     tes = sur.showcater_prs(2,name)
-#     return render(request, 'template/dashboard/sarantujuanpur.html', context)
-#
-#
-#
-def front(request):
-    # post = dc.objects.using('pgn').latest('id').flow
-    # print(post)
-    #TODO: Cek session dan ambil user yg masuk
-    sur = process()
-    # surv = sur.getJarakMs('Jes','MRU Gresik')
-    surv = sur.getGTMStanby(ms=2)
-    print(surv)
-    return render(request, 'template/dashboard/front.html')
-#--------------------------------------------------------------------#
-proc = process() #objek class processing
 
-def dashboard(request):
+def GTM(request):
+    pros = processingnew()
+    s = pros.getGtmstandby()
+    context = {'gtm' : s}
+    return render(request, 'template/dashboard/GTM.html', context)
+
+def PRS(request):
     pros = processingnew()
     s = pros.getDataPrs()
     contex = {'surv': s}
-    # gtm = pros.getGtmstandby(1)
-    # idms = 1
-    # namams = proc.getNamaMS(ms_id=idms)
-    # # jarak = proc.getJarakMs(ms=idms,prs=1)
-    # # print(jarak)
-    # prs = proc.getDataPRS()
-    # # print(prs)
-    # temp = {}
-    # listnew = []
-    # for i in prs:
-    #     svt = proc.calculateSVT(i['flow'],i['pressureoutlet'], i['conkap'])
-    #     temp['survivaltime'] = convertime(svt)
-    #     tempdict = {**i, **temp}
-    #     listnew.append(tempdict)
-    # # print(listnew)
-    # #getcurrgtm --- percobaan pake id ms 2
-    # currgtm = proc.getGTMStanby(ms=idms)
-    # contex = {'namams' : namams, 'listprs' : listnew, 'currgtm' : currgtm}
-    return  render(request, 'template/dashboard/dashboard.html', contex)
+    return render(request, 'template/dashboard/PRS.html',contex)
 
 
+def getidgtm(request,id):
+    ms = 2
+    name = id
+    pros = processingnew()
+    sol = pros.showSaran(ms,name)
+    alt = pros.getAltsolusi(sol)
 
+    context = {'saran' : sol[0][0], 'alt' : alt}
+    return render(request, 'template/dashboard/sarantujuan.html', context)
+
+def getidgtmjes(request,id):
+    name = id
+    ms = 3
+    pros = processingnew()
+    sol = pros.showSaran(ms,name)
+    alt = pros.getAltsolusi(sol)
+
+    context = {'saran' : sol[0][0], 'alt' : alt}
+    return render(request, 'template/dashboard/sarantujuanjes.html', context)
+
+def getidgtmindo(request,id):
+    name = id
+    ms = 4
+    pros = processingnew()
+    sol = pros.showSaran(ms,name)
+    alt = pros.getAltsolusi(sol)
+
+    context = {'saran' : sol[0][0], 'alt' : alt}
+    return render(request, 'template/dashboard/sarantujuanindogas.html', context)
+
+def getidgtmpur(request,id):
+    name = id
+    ms = 1
+    pros = processingnew()
+    sol = pros.showSaran(ms,name)
+    alt = pros.getAltsolusi(sol)
+
+    context = {'saran' : sol[0][0], 'alt' : alt}
+    return render(request, 'template/dashboard/sarantujuanpur.html', context)
+
+
+#
+def front(request):
+    return render(request, 'template/dashboard/front.html')
+#--------------------------------------------------------------------#
+
+def dashboard(request):
+    ms = 2
+    pros = processingnew()
+    gtm = pros.getGTMstanby(ms=ms)
+    context = {'gtm' : gtm}
+    return  render(request, 'template/dashboard/dashboard.html', context)
 #------------------------------------------------------------------------#
-# def dashboardpwkt(request):
-#     idms = 2
-#     namams = proc.getNamaMS(ms_id=idms)
-#     prs = proc.getDataPRS()
-#     temp = {}
-#     listnew = []
-#     for i in prs:
-#         svt = proc.calculateSVT(i['flow'],i['pressureoutlet'],i['conkap'])
-#         temp['survivaltime'] = svt
-#         tempdict = {**i, **temp}
-#         listnew.append(tempdict)
-#     print(listnew)
-#     #getcurrgtm --- percobaan pake id ms 2
-#     currgtm = proc.getGTMStanby(ms=idms)
-#     contex = {'namams' : namams, 'listprs' : listnew, 'currgtm' : currgtm}
-#     return render(request,'template/dashboard/dashboardpwkt.html', contex)
-# #------------------------------------------------------------------------#
-# def dashboardjes(request):
-#     idms = 3
-#     namams = proc.getNamaMS(ms_id=idms)
-#     prs = proc.getDataPRS()
-#     temp = {}
-#     listnew = []
-#     for i in prs:
-#         svt = proc.calculateSVT(i['flow'],i['pressureoutlet'], i['conkap'])
-#         temp['survivaltime'] = svt
-#         tempdict = {**i, **temp}
-#         listnew.append(tempdict)
-#     print(listnew)
-#     #getcurrgtm --- percobaan pake id ms 2
-#     currgtm = proc.getGTMStanby(ms=idms)
-#     contex = {'namams' : namams, 'listprs' : listnew, 'currgtm' : currgtm}
-#     return render(request,'template/dashboard/dashboardjes.html', contex)
-# #------------------------------------------------------------------------#
-# def dashboardindogas(request):
-#     idms = 4
-#     namams = proc.getNamaMS(ms_id=idms)
-#     prs = proc.getDataPRS()
-#     temp = {}
-#     listnew = []
-#     for i in prs:
-#         svt = proc.calculateSVT(i['flow'],i['pressureoutlet'], i['conkap'])
-#         temp['survivaltime'] = svt
-#         tempdict = {**i, **temp}
-#         listnew.append(tempdict)
-#     print(listnew)
-#     #getcurrgtm --- percobaan pake id ms 2
-#     currgtm = proc.getGTMStanby(ms=idms)
-#     contex = {'namams' : namams, 'listprs' : listnew, 'currgtm' : currgtm}
-#     return render(request,'template/dashboard/dashboardindogas.html', contex)
-
+def dashboardpwkt(request):
+    ms = 1
+    pros = processingnew()
+    gtm = pros.getGTMstanby(ms=ms)
+    context = {'gtm' : gtm}
+    return render(request,'template/dashboard/dashboardpwkt.html', context)
+#------------------------------------------------------------------------#
+def dashboardjes(request):
+    ms = 3
+    pros = processingnew()
+    gtm = pros.getGTMstanby(ms=ms)
+    context = {'gtm': gtm}
+    return render(request,'template/dashboard/dashboardjes.html', context)
+#------------------------------------------------------------------------#
+def dashboardindogas(request):
+    ms = 4
+    pros = processingnew()
+    gtm = pros.getGTMstanby(ms=ms)
+    context = {'gtm': gtm}
+    return render(request,'template/dashboard/dashboardindogas.html', context)
 #------------------------------------------------------------------------#
 def register(request):
     if request.method == 'POST':
