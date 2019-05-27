@@ -1,0 +1,142 @@
+{% extends 'template/base.html' %}
+{% block content %}
+<div class="menu-bar">
+        <ul>
+             <li><a class="nav-link" href="{% url 'PRS' %}">Detail PRS</a></li>
+             <li><a class="nav-link active" href="{% url 'GTM' %}">Detail GTM</a></li>
+             <li><a class="nav-link" href="#">Mother Station</a>
+                <div class="sub-menu-1">
+                        <ul>
+                            <li><a href="{% url 'ngagel' %}">NGAGEL</a></li>
+                            <li><a href="{% url 'indogas' %}">INDOGAS</a></li>
+                            <li><a href="{% url 'jes' %}">JES</a></li>
+                            <li><a href="{% url 'purwakarta' %}">PURWAKARTA</a></li>
+                        </ul>
+                    </div>
+            </li>   
+        </ul>
+    </div>
+    <!-- <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-blue rounded shadow-sm">
+        <div class="lh-100">
+            <h6 class="mb-0 text-white lh-100">Mother station</h6>
+            <small>
+                {{namams}}
+            </small>
+        </div>
+    </div> -->
+{#    {% for i in jarak %}#}
+{#        <h5>{{}}</h5>#}
+{#    {% endfor %}#}
+{# TODO: cek kapasitas, karena inputnya masih manual #}
+    <div class="my-3 p-3 bg-white rounded shadow-sm mb-3">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Detail GTM</h6>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+
+                            <th scope="col">idGTM</th>
+                            <th scope="col">Capasity</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in gtm %}
+                            <tr>
+                                <td>{{i.nogtm}}</td>
+                                <td>{{i.kapasitas}}</td>
+                                <td>{{i.status}}</td>
+                                <td>{{i.lokasi}}<small>fit</small></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+    </div>
+
+    <!-- Pembatas -->
+            <!-- <div class="my-4 p-3 bg-white rounded shadow-sm mt-3 mb-4">
+                <h6 class="border-bottom border-gray pb-2 mb-0">Status GTM</h6>
+                <hr>
+                <table class="table">
+                    <thead class="thead-inverse bg-blue" style="color:white">
+                        <tr>
+                            <th scope="col">GTM</th>
+                            <th scope="col">Ukuran</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                            {% for i in currgtm %}
+                                <tr>
+{#                                    <td scope="row">1</td>#}
+                                    <td scope="row">{{i.NoGtm}}</td>
+                                    <td scope="row">{{i.Kap}}<span class="text-muted"> ft</span></td>
+                                    <td scope="row" class="colorblue">{{i.status}}</td>
+                                    <td scope="row"><a href='{% url 'getidgtm' id=i.NoGtm%}'><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelId">Rute</button></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                </table>
+            </div> -->
+    <style>
+        .bg-blue{
+            background-color: rgb(30, 154, 216);
+        }
+        .colorblue{
+            color: #355989;
+        }
+        .colorred{
+            color: #b63737;
+        }
+        .menu-bar{
+            background: #355989;
+            text-align: center;
+        }
+        .menu-bar ul{
+            display: inline-flex;
+            list-style: none;
+            color: #fff;
+        }
+        .menu-bar ul li{
+            width: 150px;
+            margin: 15px;
+        }
+        .menu-bar ul li a{
+            text-decoration: none;
+            color: #fff;
+        }
+        .active, .menu-bar ul li:hover{
+            background: #8dacdd;
+            border-radius: 3px;
+        }
+        .sub-menu-1{
+            display: none;
+        }
+        .menu-bar ul li:hover .sub-menu-1{
+            display: block;
+            position: absolute;
+            background: rgb(0,0,100);
+            margin-left: 50px;
+        }
+        .menu-bar ul li:hover .sub-menu-1 ul{
+            display: block;
+            margin: 10px;
+        }
+        .menu-bar ul li:hover .sub-menu-1 ul li{
+            width: 100px;
+            padding: 5px;
+            border-bottom: 1px dotted #fff;
+            background: transparent;
+            border-radius: 0;
+            text-align: left;
+        }
+        .menu-bar ul li:hover .sub-menu-1 ul li:hover{
+            border-bottom: none;
+        }
+        .menu-bar ul li:hover .sub-menu-1 ul li a:hover{
+            color: #b2ff00;
+        }
+    </style>
+{% endblock %}
