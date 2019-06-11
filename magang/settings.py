@@ -87,11 +87,17 @@ DATABASES = {
         'PORT' : '3306'
     },
     'pgn': {
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'pgnbaru',
+        # 'USER': 'pgn',
+        # 'PASSWORD': 'Muhamad_fadilah',
+        # 'HOST': 'localhost',
+        # 'PORT': '3306'
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pgnbaru',
-        'USER': 'pgn',
-        'PASSWORD': 'Muhamad_fadilah',
-        'HOST': 'localhost',
+        'NAME': 'u6575546_gagas360',
+        'USER': 'u6575546_root',
+        'PASSWORD': '12123',
+        'HOST': 'gagas360.com',
         'PORT': '3306'
     }
 }
@@ -137,6 +143,7 @@ USE_TZ = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = '/PRS/'
+LOGIN_URL = 'login/'
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Static files (CSS, JavaScript, Images)

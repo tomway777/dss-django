@@ -1,5 +1,8 @@
 from DSSpgn.models_pgn import Datacater, Datagtm, Detaildatacater, Masterprs, Mastermotherstation, Mastergtm, Masterstatus
 import operator
+from math import floor
+from datetime import datetime, date
+
 
 class processingnew():
 
@@ -15,15 +18,32 @@ class processingnew():
         return temkap
 
     def convertime(self,time):
-        mon, sec = divmod(time, 60)
-        hr, mon = divmod(mon, 60)
-        result = "%d:%02d:%02d" % (hr, mon, sec)
+        detik = time
+        d = floor(detik / (60 * 60 * 24))
+        detik -= d * (60 * 60 * 24)
+        h = floor(detik / 3600)
+        detik -= h * (3600)
+        m = floor(detik / 60)
+        detik -= m * 60
+        s = floor(detik)
+        detik -= s
+        result = "%dd %02d:%02d:%02d" % (d, h, m, s)
         return result
 
 
     def getDataPrs(self):
         dc = Datacater.objects.using('pgn').raw('(SELECT * FROM `datacater` where Waktu in '
                                                 '(select MAX(Waktu) from datacater where Actived=1 group by IdPRS) and Actived=1 group by IdPRS)')
+        tempwaktu = {}
+        for k in dc:
+            waktu = Datacater.objects.using('pgn').filter(idprs=k.idprs).order_by('-waktu')
+            if waktu.__len__() > 1:
+                tempwaktu[k.idprs] = ((waktu[0].waktu - waktu[1].waktu).seconds)/3600
+                # print(((waktu[0].waktu - waktu[1].waktu).seconds)/3600)
+            else:
+                tempwaktu[k.idprs] = 1
+        # print(tempwaktu)
+
         listData = []
 
         for i in dc:
@@ -31,14 +51,16 @@ class processingnew():
             prs = Masterprs.objects.using('pgn').get(id=i.idprs).namaprs
             flow = Detaildatacater.objects.using('pgn').get(idprs=i.idprs, iddc=i.id).flow
             gtm = Mastergtm.objects.using('pgn').get(id=i.idgtm).kapasitasgtm
-            waktutempuh = Datagtm.objects.using('pgn').get(idgtm=i.idgtm).waktutempuh
+            # waktutempuh = Datagtm.objects.using('pgn').get(idgtm=i.idgtm).get_latest_by('-waktu').waktutempuh
+            waktutempuh = Datagtm.objects.using('pgn').filter(idgtm=i.idgtm).latest('-tanggal').waktutempuh
+            wflow = tempwaktu.get(i.idprs)
             presgtm = i.pressuregtm
             newkap = self.convertKap(gtm)
 
             if(flow == 0):
                 survival = ((presgtm*newkap)/1)*3600
             else:
-                survival = ((presgtm*newkap)/flow)*3600
+                survival = ((presgtm*newkap)/(flow/wflow))*3600
             dicttemp['convsur'] = self.convertime(survival)
             dicttemp['idgtm'] = i.idgtm
             dicttemp['namaprs'] = prs
@@ -87,8 +109,8 @@ class processingnew():
         idgtm = Mastergtm.objects.using('pgn').get(nogtm=id, actived=1).id
         kap = Mastergtm.objects.using('pgn').get(id=idgtm).kapasitasgtm
         surv = self.getDataPrs()
-        waktutmp = Datagtm.objects.using('pgn').get(idgtm=idgtm).waktutempuh
-
+        # waktutmp = Datagtm.objects.using('pgn').get(idgtm=idgtm).waktutempuh
+        waktutmp = Datagtm.objects.using('pgn').filter(idgtm=idgtm).latest('-tanggal').waktutempuh
         first_filter = []
         altsol = {}
         solusi = []
@@ -98,20 +120,6 @@ class processingnew():
                 altsol[i.get('namaprs')] = i.get('waktutempuh')
 
         sorted_x = sorted(altsol.items(), key=operator.itemgetter(1))
-
-        # count = len(first_filter)
-        #
-        # if count > 1:
-        #     templis =[]
-        #     for j in first_filter:
-        #         templis.append(j.get('waktutempuh'))
-        #     minx = min(templis)
-        #     for k in surv:
-        #         if k.get('waktutempuh') == minx:
-        #             solusi.append(k)
-        # else:
-        #     solusi.append(first_filter)
-
         return sorted_x
 
     def getAltsolusi(self, namaprs):

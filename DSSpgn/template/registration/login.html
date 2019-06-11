@@ -7,6 +7,8 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Log In</legend>
                 {{ form|crispy}}
+{#                    <input class="form-control" type = "text" placeholder = "Identifiant" name = "username" />#}
+{#                    <input type = "password" placeholder = "password" name = "password" />#}
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Login</button>
@@ -17,5 +19,40 @@
                 </small>
             </div>
         </form>
-    </div>
+
+{#     <form class="form-group" name = "form" action = "{% url "login" %}"#}
+{#         method = "POST" >{% csrf_token %}#}
+{##}
+{#         <div style = "max-width:470px;">#}
+{#            <center>#}
+{#               <input type = "text" style = "margin-left:20%;"#}
+{#                  placeholder = "Identifiant" name = "username" />#}
+{#            </center>#}
+{#         </div>#}
+{##}
+{#         <br>#}
+{##}
+{#         <div style = "max-width:470px;">#}
+{#            <center>#}
+{#               <input type = "password" style = "margin-left:20%;"#}
+{#                  placeholder = "password" name = "password" />#}
+{#            </center>#}
+{#         </div>#}
+{##}
+{#         <br>#}
+{##}
+{#         <div style = "max-width:470px;">#}
+{#            <center>#}
+{##}
+{#               <button style = "border:0px; background-color:#4285F4; margin-top:8%;#}
+{#                  height:35px; width:80%;margin-left:19%;" type = "submit"#}
+{#                  value = "Login" >#}
+{#                  <strong>Login</strong>#}
+{#               </button>#}
+{##}
+{#            </center>#}
+{#         </div>#}
+{##}
+{#      </form>#}
+{#    </div>#}
 {% endblock %}

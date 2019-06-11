@@ -1,20 +1,22 @@
 {% extends 'template/base.html' %}
 
-{% block content %}
-    <ul class="nav justify-content-center">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Active link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled link</a>
-        </li>
-    </ul>
-    <div>
-        {% for i in resp %}
-            <h3>{{i.flow}}</h3>
-        {% endfor %}
+{% block main %}
+    <style>
+    .jumbotron {
+        padding: 200px;
+         background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    }
+    body{
+         background: rgb(238,174,202);
+        background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    }
+    </style>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-fluid">
+        <h1 class="text-center">Dashboard</h1>
+          <hr>
+        <p class="text-center">PT Perusahaan Gas Negara (Persero)</p>
+      </div>
     </div>
 {% endblock %}
